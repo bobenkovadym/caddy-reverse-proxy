@@ -5,7 +5,7 @@
 	auto_https off # railway handles https for us, this could in some cases cause issues if left enabled
 	# runtime logs
 	log {
-		format json # set runtime log format to json mode 
+		format json # set runtime log format to json mode
 	}
 	# server options
 	servers {
@@ -53,6 +53,8 @@
 
 		# sets the Host header to the header to the dynamic name and port options
 		header_up Host {upstream_hostport}
+		header_up +Cookie {http.request.header.Cookie}
+		header_down +Set-Cookie {http.response.header.Set-Cookie}
 	}
 
 	# the handle_path directive WILL strip /api/ from the path before proxying
@@ -81,6 +83,8 @@
 
 			# sets the Host header to the header to the dynamic name and port options
 			header_up Host {upstream_hostport}
+			header_up +Cookie {http.request.header.Cookie}
+			header_down +Set-Cookie {http.response.header.Set-Cookie}
 		}
 	}
 }
